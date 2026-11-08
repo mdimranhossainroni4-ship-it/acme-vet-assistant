@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACME VET Assistant</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f1f6f3;
+ color:#24352b;
+}
+header{
+ background:#087b45;
+ color:white;
+ text-align:center;
+ padding:25px 12px;
+}
+header h1{margin:0;font-size:27px}
+header p{margin:8px 0 0}
+nav{
+ background:#075b36;
+ padding:12px;
+ text-align:center;
+}
+nav a{
+ color:white;
+ text-decoration:none;
+ margin:8px;
+ font-size:14px;
+}
+.container{
+ max-width:900px;
+ margin:20px auto;
+ padding:15px;
+}
+.card{
+ background:white;
+ padding:18px;
+ margin-bottom:15px;
+ border-radius:12px;
+ box-shadow:0 2px 9px #0001;
+}
+select,input{
+ width:100%;
+ padding:13px;
+ margin:8px 0;
+ border:1px solid #ccc;
+ border-radius:7px;
+ font-size:16px;
+}
+button{
+ background:#087b45;
+ color:white;
+ border:0;
+ padding:12px 18px;
+ border-radius:7px;
+ cursor:pointer;
+}
+button:hover{background:#075b36}
+.result{
+ border-left:4px solid #087b45;
+ padding:12px;
+ margin-top:12px;
+ background:#f5faf6;
+ border-radius:5px;
+}
+footer{
+ text-align:center;
+ padding:20px;
+ background:#075b36;
+ color:white;
+}
+.small{font-size:13px;color:#666}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>ACME VET Assistant</h1>
+<p>Smart Veterinary Information &amp; Disease Assistant</p>
+<p>গবাদিপশুর রোগ নির্ণয়ে প্রাথমিক তথ্য সহায়ক</p>
+</header>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#search">Disease Search</a>
+<a href="#medicine">Medicine</a>
+<a href="#about">About</a>
+</nav>
+
+<div class="container">
+
+<section class="card" id="home">
+<h2>স্বাগতম ACME VET Assistant-এ</h2>
+<p>
+গরু, মহিষ ও ছাগলের বিভিন্ন রোগের লক্ষণ,
+প্রাথমিক করণীয় এবং ভেটেরিনারি তথ্য এখানে পাওয়া যাবে।
+</p>
+</section>
+
+<section class="card" id="search">
+<h2>রোগ অনুসন্ধান করুন</h2>
+
+<label for="animal">পশু নির্বাচন করুন</label>
+<select id="animal" onchange="searchDisease()">
+<option value="all">সকল প্রাণী</option>
+<option value="গরু">গরু</option>
+<option value="মহিষ">মহিষ</option>
+<option value="ছাগল">ছাগল</option>
+</select>
+
+<label for="searchBox">রোগের নাম অথবা লক্ষণ লিখুন</label>
+<input type="text" id="searchBox"
+placeholder="যেমন: জ্বর, ক্ষুরা রোগ, ডায়রিয়া..."
+oninput="searchDisease()">
+
+<div id="results" aria-live="polite">
+<p>রোগের তথ্য দেখতে অনুসন্ধান করুন।</p>
+</div>
+</section>
+
+<section class="card" id="medicine">
+<h2>ACME Veterinary Medicine</h2>
+<p>
+এখানে ACME-এর ভেটেরিনারি ওষুধের তথ্য যুক্ত করা হবে।
+</p>
+<div class="result">
+<strong>Medicine Database</strong>
+<p>
+ওষুধের নাম, ব্যবহার, উপাদান, নির্দেশনা ও সতর্কতা
+যাচাইকৃত তথ্যের ভিত্তিতে পরবর্তীতে যুক্ত করা হবে।
+</p>
+</div>
+</section>
+
+<section class="card" id="about">
+<h2>About ACME VET Assistant</h2>
+<p>
+এই ওয়েবসাইটটি গবাদিপশুর রোগ সম্পর্কে প্রাথমিক তথ্য
+সহজে খুঁজে পাওয়ার জন্য তৈরি করা হয়েছে।
+</p>
+</section>
+
+<section class="card">
+<h3>জরুরি সতর্কতা</h3>
+<p>
+এই ওয়েবসাইটের তথ্য পশুচিকিৎসকের বিকল্প নয়।
+গুরুতর অসুস্থতা, শ্বাসকষ্ট, রক্তপাত বা হঠাৎ
+মৃত্যুর ঝুঁকি থাকলে দ্রুত রেজিস্টার্ড
+ভেটেরিনারি চিকিৎসকের পরামর্শ নিন।
+</p>
+</section>
+
+</div>
+
+<footer>
+<p>ACME VET Assistant</p>
+<p>Veterinary Information Demo</p>
+</footer>
+
+<script>
+
+const diseases = [
+
+{
+animal:"গরু",
+name:"ক্ষুরা রোগ (FMD)",
+symptoms:"জ্বর, মুখে ঘা, জিহ্বায় ফোসকা, অতিরিক্ত লালা, পায়ে ক্ষত ও খোঁড়ানো।",
+care:"আক্রান্ত পশুকে আলাদা রাখুন। দ্রুত পশুচিকিৎসকের পরামর্শ নিন।"
+},
+
+{
+animal:"গরু",
+name:"লাম্পি স্কিন ডিজিজ (LSD)",
+symptoms:"শরীরে শক্ত গুটি, জ্বর, চোখ দিয়ে পানি পড়া, ক্ষুধামন্দা ও পা ফুলে যাওয়া।",
+care:"পশুকে আলাদা রাখুন এবং দ্রুত চিকিৎসকের পরামর্শ নিন।"
+},
+
+{
+animal:"গরু",
+name:"বাদলা রোগ",
+symptoms:"হঠাৎ জ্বর, পেশি ফুলে যাওয়া, খোঁড়ানো ও দ্রুত শারীরিক অবনতি।",
+care:"জরুরি ভিত্তিতে পশুচিকিৎসক ডাকুন।"
+},
+
+{
+animal:"গরু",
+name:"গলাফুলা রোগ",
+symptoms:"উচ্চ জ্বর, গলা ও ঘাড় ফুলে যাওয়া, শ্বাসকষ্ট ও অতিরিক্ত লালা।",
+care:"জরুরি চিকিৎসা প্রয়োজন। আক্রান্ত পশুকে আলাদা রাখুন।"
+},
+
+{
+animal:"গরু",
+name:"ডায়রিয়া",
+symptoms:"পাতলা পায়খানা, পানিশূন্যতা, দুর্বলতা ও ক্ষুধামন্দা।",
+care:"পরিষ্কার পানি দিন এবং পানিশূন্যতা হলে দ্রুত চিকিৎসকের পরামর্শ নিন।"
+},
+
+{
+animal:"মহিষ",
+name:"ক্ষুরা রোগ (FMD)",
+symptoms:"মুখে ফোসকা, জিহ্বায় ক্ষত, লালা পড়া ও খোঁড়ানো।",
+care:"আক্রান্ত পশু আলাদা করুন এবং চিকিৎসকের পরামর্শ নিন।"
+},
+
+{
+animal:"মহিষ",
+name:"গলাফুলা রোগ",
+symptoms:"জ্বর, গলা ফুলে যাওয়া, শ্বাসকষ্ট ও খাবারে অনীহা।",
+care:"জরুরি পশুচিকিৎসা প্রয়োজন।"
+},
+
+{
+animal:"মহিষ",
+name:"ডায়রিয়া",
+symptoms:"ঘন ঘন পাতলা পায়খানা, দুর্বলতা ও পানিশূন্যতা।",
+care:"পানিশূন্যতা প্রতিরোধ করুন এবং চিকিৎসকের পরামর্শ নিন।"
+},
+
+{
+animal:"ছাগল",
+name:"PPR রোগ",
+symptoms:"জ্বর, মুখে ঘা, নাক ও চোখ দিয়ে পানি পড়া, ডায়রিয়া ও শ্বাসকষ্ট।",
+care:"আক্রান্ত ছাগল আলাদা রাখুন এবং দ্রুত চিকিৎসকের সাহায্য নিন।"
+},
+
+{
+animal:"ছাগল",
+name:"ছাগলের নিউমোনিয়া",
+symptoms:"কাশি, জ্বর, দ্রুত শ্বাস নেওয়া ও নাক দিয়ে পানি পড়া।",
+care:"শুকনো ও পরিষ্কার স্থানে রাখুন এবং চিকিৎসকের পরামর্শ নিন।"
+},
+
+{
+animal:"ছাগল",
+name:"কৃমি সংক্রমণ",
+symptoms:"ওজন কমে যাওয়া, দুর্বলতা, পাতলা পায়খানা ও চোখের পাতার ভেতর ফ্যাকাশে হওয়া।",
+care:"মল পরীক্ষা ও চিকিৎসকের পরামর্শ অনুযায়ী কৃমিনাশক ব্যবহার করুন।"
+},
+
+{
+animal:"ছাগল",
+name:"ডায়রিয়া",
+symptoms:"পাতলা পায়খানা, দুর্বলতা ও পানিশূন্যতা।",
+care:"পরিষ্কার পানি দিন এবং দ্রুত চিকিৎসকের পরামর্শ নিন।"
+}
+
+];
+
+function searchDisease(){
+
+let animal = document.getElementById("animal").value;
+let keyword = document.getElementById("searchBox")
+.value.toLowerCase().trim();
+
+let results = document.getElementById("results");
+
+let filtered = diseases.filter(d => {
+
+let matchAnimal =
+animal === "all" || d.animal === animal;
+
+let matchKeyword =
+(d.name + d.symptoms + d.care + d.animal)
+.toLowerCase().includes(keyword);
+
+return matchAnimal && matchKeyword;
+
+});
+
+if(filtered.length === 0){
+results.innerHTML =
+"<p>কোনো তথ্য পাওয়া যায়নি। অন্য নাম দিয়ে অনুসন্ধান করুন।</p>";
+return;
+}
+
+results.innerHTML = filtered.map(d => `
+
+<div class="result">
+<h3>${d.animal} - ${d.name}</h3>
+
+<strong>রোগের লক্ষণ:</strong>
+<p>${d.symptoms}</p>
+
+<strong>প্রাথমিক করণীয়:</strong>
+<p>${d.care}</p>
+</div>
+
+`).join("");
+
+}
+
+</script>
+
+</body>
+</html>
